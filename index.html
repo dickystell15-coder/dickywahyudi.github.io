@@ -1,1 +1,1069 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3 Tahun Bersama</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  body {
+    background: #020e1f;
+    color: #e8f4fd;
+    font-family: 'Lato', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .stars-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle var(--d, 3s) infinite alternate ease-in-out;
+    opacity: 0;
+  }
+
+  @keyframes twinkle {
+    from { opacity: 0.1; transform: scale(0.8); }
+    to   { opacity: 0.9; transform: scale(1.2); }
+  }
+
+  .particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .particle {
+    position: absolute;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    animation: float-up var(--dur, 8s) linear infinite;
+    opacity: 0;
+  }
+
+  @keyframes float-up {
+    0%   { transform: translateY(110vh) translateX(0) scale(0); opacity: 0; }
+    10%  { opacity: 0.7; transform: translateY(90vh) translateX(10px) scale(1); }
+    90%  { opacity: 0.4; }
+    100% { transform: translateY(-10vh) translateX(-20px) scale(0.5); opacity: 0; }
+  }
+
+  .content {
+    position: relative;
+    z-index: 2;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 60px 20px 40px;
+    position: relative;
+  }
+
+  .anniversary-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #1a4a8a, #0d2d5e);
+    border: 1px solid rgba(100, 180, 255, 0.3);
+    border-radius: 50px;
+    padding: 8px 24px;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #7ec8f5;
+    margin-bottom: 30px;
+    animation: fadeInDown 1s ease both;
+  }
+
+  .hero-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(100px, 20vw, 160px);
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(180deg, #5db8f7 0%, #1a6cbf 50%, #0d3d7a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInScale 1.2s ease both 0.2s;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 5vw, 38px);
+    font-weight: 400;
+    font-style: italic;
+    color: #b8deff;
+    margin-bottom: 10px;
+    animation: fadeInUp 1s ease both 0.4s;
+  }
+
+  .hero-subtitle {
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #4a8fc2;
+    margin-bottom: 30px;
+    animation: fadeInUp 1s ease both 0.6s;
+  }
+
+  .hero-date {
+    font-size: 15px;
+    color: #7eb8e8;
+    animation: fadeInUp 1s ease both 0.8s;
+  }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.7); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 10px 0 30px;
+    animation: fadeInUp 1s ease both 0.9s;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(100,180,255,0.3), transparent);
+  }
+  .divider-icon { font-size: 18px; filter: drop-shadow(0 0 6px rgba(100,200,255,0.6)); }
+
+  .countdown-section {
+    background: linear-gradient(135deg, rgba(13,45,94,0.8), rgba(8,26,60,0.9));
+    border: 1px solid rgba(100, 180, 255, 0.2);
+    border-radius: 20px;
+    padding: 30px 20px;
+    margin-bottom: 24px;
+    text-align: center;
+    animation: fadeInUp 1s ease both 1s;
+    backdrop-filter: blur(10px);
+  }
+
+  .countdown-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #4a8fc2;
+    margin-bottom: 20px;
+  }
+
+  .countdown-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .countdown-box {
+    background: rgba(10, 35, 80, 0.6);
+    border: 1px solid rgba(100, 180, 255, 0.15);
+    border-radius: 12px;
+    padding: 16px 8px;
+  }
+
+  .countdown-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 6vw, 42px);
+    font-weight: 700;
+    color: #5db8f7;
+    line-height: 1;
+    display: block;
+  }
+
+  .countdown-unit {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #3a7ab5;
+    margin-top: 6px;
+    display: block;
+  }
+
+  .names-section, .date-section, .letter-section,
+  .timeline-section, .mood-section, .meter-section, .wish-section {
+    background: linear-gradient(135deg, rgba(13,45,94,0.8), rgba(8,26,60,0.9));
+    border: 1px solid rgba(100, 180, 255, 0.2);
+    border-radius: 20px;
+    padding: 28px 24px;
+    margin-bottom: 24px;
+    animation: fadeInUp 1s ease both 1.1s;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #4a8fc2;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .names-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .name-box { flex: 1; text-align: center; }
+
+  .name-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 4vw, 26px);
+    font-style: italic;
+    color: #b8deff;
+    min-height: 36px;
+    display: block;
+  }
+
+  .heart-icon {
+    font-size: 28px;
+    animation: heartbeat 1.5s ease infinite;
+    filter: drop-shadow(0 0 8px rgba(255, 100, 150, 0.7));
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    15%       { transform: scale(1.25); }
+    30%       { transform: scale(1); }
+    45%       { transform: scale(1.15); }
+    60%       { transform: scale(1); }
+  }
+
+  .names-inputs { display: flex; gap: 12px; align-items: center; }
+
+  .name-input, .add-input {
+    flex: 1;
+    background: rgba(10, 35, 80, 0.5);
+    border: 1px solid rgba(100, 180, 255, 0.2);
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: #b8deff;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s;
+    text-align: center;
+    width: 100%;
+  }
+
+  .name-input::placeholder, .add-input::placeholder { color: rgba(100, 150, 200, 0.5); }
+  .name-input:focus, .add-input:focus { border-color: rgba(100, 180, 255, 0.5); }
+
+  .input-sep { color: #4a8fc2; font-size: 20px; flex-shrink: 0; }
+
+  .date-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+  .date-input, .time-input {
+    flex: 1;
+    min-width: 120px;
+    background: rgba(10, 35, 80, 0.5);
+    border: 1px solid rgba(100, 180, 255, 0.2);
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: #b8deff;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .date-input:focus, .time-input:focus { border-color: rgba(100, 180, 255, 0.5); }
+  .date-input::-webkit-calendar-picker-indicator,
+  .time-input::-webkit-calendar-picker-indicator {
+    filter: invert(0.5) sepia(1) saturate(5) hue-rotate(180deg);
+    cursor: pointer;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .stat-item {
+    background: rgba(10, 35, 80, 0.4);
+    border: 1px solid rgba(100, 180, 255, 0.12);
+    border-radius: 10px;
+    padding: 12px 8px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(16px, 3.5vw, 22px);
+    color: #5db8f7;
+    display: block;
+    font-weight: 700;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #3a7ab5;
+    margin-top: 4px;
+    display: block;
+  }
+
+  .letter-textarea {
+    width: 100%;
+    background: rgba(10, 35, 80, 0.5);
+    border: 1px solid rgba(100, 180, 255, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    color: #b8deff;
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1.8;
+    min-height: 120px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.3s;
+    margin-bottom: 12px;
+  }
+
+  .letter-textarea::placeholder { color: rgba(100, 150, 200, 0.4); font-style: italic; }
+  .letter-textarea:focus { border-color: rgba(100, 180, 255, 0.4); }
+
+  .letter-display {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.9;
+    color: #c8e4ff;
+    min-height: 50px;
+    white-space: pre-wrap;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 30px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, rgba(100,180,255,0.5), rgba(100,180,255,0.05));
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding: 14px 16px;
+    background: rgba(10, 35, 80, 0.4);
+    border: 1px solid rgba(100, 180, 255, 0.12);
+    border-radius: 12px;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+
+  .timeline-item:hover {
+    border-color: rgba(100, 180, 255, 0.3);
+    transform: translateX(4px);
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -26px; top: 18px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #1a6cbf;
+    border: 2px solid #5db8f7;
+    box-shadow: 0 0 8px rgba(93, 184, 247, 0.5);
+  }
+
+  .timeline-year {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #4a8fc2;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .timeline-text { font-size: 14px; color: #b8deff; line-height: 1.6; }
+  .timeline-emoji { font-size: 18px; margin-right: 6px; }
+
+  .add-memory { display: flex; gap: 10px; margin-top: 16px; }
+
+  .btn-add {
+    background: linear-gradient(135deg, #1a4a8a, #0d2d5e);
+    border: 1px solid rgba(100, 180, 255, 0.3);
+    border-radius: 10px;
+    padding: 10px 18px;
+    color: #7ec8f5;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+    font-family: 'Lato', sans-serif;
+  }
+
+  .btn-add:hover {
+    background: linear-gradient(135deg, #1e5ba8, #112e6e);
+    border-color: rgba(100, 180, 255, 0.5);
+    transform: translateY(-1px);
+  }
+
+  .mood-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .mood-btn {
+    background: rgba(10, 35, 80, 0.4);
+    border: 1px solid rgba(100, 180, 255, 0.15);
+    border-radius: 12px;
+    padding: 14px 8px;
+    color: #7eb8e8;
+    font-family: 'Lato', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s;
+    letter-spacing: 0.5px;
+  }
+
+  .mood-btn:hover {
+    border-color: rgba(100, 180, 255, 0.4);
+    background: rgba(20, 55, 110, 0.6);
+    transform: translateY(-2px);
+  }
+
+  .mood-btn.active {
+    border-color: #5db8f7;
+    background: rgba(30, 80, 160, 0.5);
+    color: #b8deff;
+    box-shadow: 0 0 12px rgba(93, 184, 247, 0.2);
+  }
+
+  .mood-emoji { font-size: 22px; display: block; margin-bottom: 6px; }
+
+  .mood-result {
+    margin-top: 16px;
+    padding: 14px 16px;
+    background: rgba(10, 35, 80, 0.4);
+    border: 1px solid rgba(100, 180, 255, 0.15);
+    border-radius: 12px;
+    font-size: 13px;
+    color: #7eb8e8;
+    line-height: 1.6;
+    display: none;
+  }
+  .mood-result.show { display: block; }
+
+  .meter-section { text-align: center; }
+
+  .meter-circle {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 20px;
+  }
+
+  .meter-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .meter-track { fill: none; stroke: rgba(100, 180, 255, 0.1); stroke-width: 10; }
+
+  .meter-fill {
+    fill: none;
+    stroke: url(#meterGrad);
+    stroke-width: 10;
+    stroke-linecap: round;
+    stroke-dasharray: 408;
+    stroke-dashoffset: 408;
+    transition: stroke-dashoffset 2s ease;
+  }
+
+  .meter-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .meter-pct {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #5db8f7;
+    display: block;
+  }
+
+  .meter-desc { font-size: 11px; color: #4a8fc2; letter-spacing: 1px; display: block; }
+
+  .meter-btn {
+    background: linear-gradient(135deg, #1a4a8a, #0d2d5e);
+    border: 1px solid rgba(100, 180, 255, 0.3);
+    border-radius: 50px;
+    padding: 12px 30px;
+    color: #7ec8f5;
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s;
+    letter-spacing: 1px;
+  }
+
+  .meter-btn:hover {
+    background: linear-gradient(135deg, #1e5ba8, #112e6e);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(30, 100, 200, 0.3);
+  }
+
+  .meter-message {
+    margin-top: 16px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: #b8deff;
+    min-height: 22px;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .meter-message.show { opacity: 1; }
+
+  .wish-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100,180,255,0.2) transparent;
+  }
+
+  .wish-card {
+    flex-shrink: 0;
+    width: 200px;
+    background: rgba(10, 35, 80, 0.5);
+    border: 1px solid rgba(100, 180, 255, 0.15);
+    border-radius: 14px;
+    padding: 20px 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .wish-card:hover {
+    border-color: rgba(100, 180, 255, 0.35);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(10, 50, 130, 0.4);
+  }
+
+  .wish-card.selected {
+    border-color: #5db8f7;
+    background: rgba(25, 70, 150, 0.5);
+    box-shadow: 0 0 20px rgba(93, 184, 247, 0.2);
+  }
+
+  .wish-emoji { font-size: 28px; display: block; margin-bottom: 10px; }
+  .wish-title { font-size: 13px; font-weight: 700; color: #b8deff; margin-bottom: 6px; }
+  .wish-text { font-size: 12px; color: #6aa8d8; line-height: 1.5; }
+
+  .share-section {
+    text-align: center;
+    padding: 20px 0 0;
+    animation: fadeInUp 1s ease both 1.8s;
+  }
+
+  .btn-share {
+    background: linear-gradient(135deg, #1a5cbf, #0d3880);
+    border: 1px solid rgba(100, 180, 255, 0.4);
+    border-radius: 50px;
+    padding: 16px 48px;
+    color: #b8deff;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .btn-share:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(26, 92, 191, 0.5);
+  }
+
+  .share-note { font-size: 12px; color: #3a7ab5; letter-spacing: 1px; }
+
+  .floating-heart {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    font-size: 20px;
+    animation: floatHeart 2s ease-out forwards;
+  }
+
+  @keyframes floatHeart {
+    0%   { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-150px) scale(0.5); opacity: 0; }
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 30px; left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: rgba(13, 45, 94, 0.95);
+    border: 1px solid rgba(100, 180, 255, 0.3);
+    border-radius: 50px;
+    padding: 12px 24px;
+    color: #b8deff;
+    font-size: 13px;
+    z-index: 9999;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(10px);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  .aurora {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .aurora-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.08;
+    animation: drift var(--ds, 15s) ease-in-out infinite alternate;
+  }
+
+  @keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(var(--dx, 40px), var(--dy, 30px)) scale(1.1); }
+  }
+</style>
+</head>
+<body>
+
+<div class="aurora">
+  <div class="aurora-blob" style="width:500px;height:500px;background:#1a5cbf;top:-100px;left:-100px;--ds:18s;--dx:60px;--dy:40px;"></div>
+  <div class="aurora-blob" style="width:400px;height:400px;background:#0d3a8a;bottom:-50px;right:-50px;--ds:14s;--dx:-50px;--dy:-30px;"></div>
+  <div class="aurora-blob" style="width:300px;height:300px;background:#1a3a6e;top:40%;left:30%;--ds:20s;--dx:30px;--dy:-40px;"></div>
+</div>
+
+<div class="stars-bg" id="starsContainer"></div>
+<div class="particles" id="particlesContainer"></div>
+
+<div class="content">
+
+  <div class="hero">
+    <div class="anniversary-badge">✦ Happy Anniversary ✦</div>
+    <div class="hero-number">3</div>
+    <div class="hero-title">Tahun Bersama</div>
+    <div class="hero-subtitle">Years of Love &amp; Memories</div>
+    <div class="divider"><span class="divider-icon">💙</span></div>
+    <div class="hero-date" id="heroDate">Loading...</div>
+  </div>
+
+  <div class="countdown-section">
+    <div class="countdown-label">✦ Menghitung Setiap Detik ✦</div>
+    <div class="countdown-grid">
+      <div class="countdown-box">
+        <span class="countdown-num" id="cd-days">000</span>
+        <span class="countdown-unit">Hari</span>
+      </div>
+      <div class="countdown-box">
+        <span class="countdown-num" id="cd-hours">00</span>
+        <span class="countdown-unit">Jam</span>
+      </div>
+      <div class="countdown-box">
+        <span class="countdown-num" id="cd-mins">00</span>
+        <span class="countdown-unit">Menit</span>
+      </div>
+      <div class="countdown-box">
+        <span class="countdown-num" id="cd-secs">00</span>
+        <span class="countdown-unit">Detik</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="names-section">
+    <div class="section-label">✦ Dua Jiwa Satu Hati ✦</div>
+    <div class="names-display">
+      <div class="name-box"><span class="name-text" id="name1Display">Namamu</span></div>
+      <span class="heart-icon">💙</span>
+      <div class="name-box"><span class="name-text" id="name2Display">Namanya</span></div>
+    </div>
+    <div class="names-inputs">
+      <input class="name-input" id="name1Input" type="text" placeholder="Nama kamu" maxlength="20">
+      <span class="input-sep">♡</span>
+      <input class="name-input" id="name2Input" type="text" placeholder="Nama dia" maxlength="20">
+    </div>
+  </div>
+
+  <div class="date-section">
+    <div class="section-label">✦ Sejak Pertama Bersama ✦</div>
+    <div class="date-row">
+      <input class="date-input" type="date" id="startDate">
+      <input class="time-input" type="time" id="startTime" value="00:00">
+    </div>
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="stat-num" id="statDays">—</span>
+        <span class="stat-label">Hari</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" id="statHours">—</span>
+        <span class="stat-label">Jam</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" id="statMins">—</span>
+        <span class="stat-label">Menit</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="letter-section">
+    <div class="section-label">✦ Kata Hatiku Untukmu ✦</div>
+    <textarea class="letter-textarea" id="letterInput" placeholder="Tuliskan kata-kata indahmu di sini... Setiap kata adalah bagian dari cerita kita yang tak ternilai..."></textarea>
+    <div class="letter-display" id="letterDisplay"></div>
+  </div>
+
+  <div class="timeline-section">
+    <div class="section-label">✦ Kenangan Terindah Kita ✦</div>
+    <div class="timeline" id="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">Awal Kita</div>
+        <div class="timeline-text"><span class="timeline-emoji">🌸</span>Pertama kali bertemu dan jatuh cinta</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">Tahun 1</div>
+        <div class="timeline-text"><span class="timeline-emoji">🌙</span>Mengenal lebih dalam, saling melengkapi</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">Tahun 2</div>
+        <div class="timeline-text"><span class="timeline-emoji">⭐</span>Melewati badai bersama, makin kuat</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">Tahun 3</div>
+        <div class="timeline-text"><span class="timeline-emoji">💙</span>Tiga tahun cinta yang tumbuh semakin dalam</div>
+      </div>
+    </div>
+    <div class="add-memory">
+      <input class="add-input" id="memoryInput" type="text" placeholder="Tambah kenangan baru... (emoji + teks)">
+      <button class="btn-add" onclick="addMemory()">+ Tambah</button>
+    </div>
+  </div>
+
+  <div class="mood-section">
+    <div class="section-label">✦ Suasana Hati Hari Ini ✦</div>
+    <div class="mood-grid">
+      <button class="mood-btn" onclick="setMood(this, 'romantic')"><span class="mood-emoji">🌹</span>Romantis</button>
+      <button class="mood-btn" onclick="setMood(this, 'happy')"><span class="mood-emoji">✨</span>Bahagia</button>
+      <button class="mood-btn" onclick="setMood(this, 'nostalgic')"><span class="mood-emoji">🌙</span>Nostalgia</button>
+      <button class="mood-btn" onclick="setMood(this, 'grateful')"><span class="mood-emoji">💙</span>Bersyukur</button>
+      <button class="mood-btn" onclick="setMood(this, 'dreamy')"><span class="mood-emoji">🌌</span>Mimpi</button>
+      <button class="mood-btn" onclick="setMood(this, 'cozy')"><span class="mood-emoji">☕</span>Hangat</button>
+    </div>
+    <div class="mood-result" id="moodResult"></div>
+  </div>
+
+  <div class="meter-section">
+    <div class="section-label">✦ Ukuran Cintaku Untukmu ✦</div>
+    <div class="meter-circle">
+      <svg class="meter-svg" viewBox="0 0 160 160">
+        <defs>
+          <linearGradient id="meterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#5db8f7"/>
+            <stop offset="100%" style="stop-color:#1a6cbf"/>
+          </linearGradient>
+        </defs>
+        <circle class="meter-track" cx="80" cy="80" r="65"/>
+        <circle class="meter-fill" id="meterFill" cx="80" cy="80" r="65"/>
+      </svg>
+      <div class="meter-center">
+        <span class="meter-pct" id="meterPct">0%</span>
+        <span class="meter-desc">CINTA</span>
+      </div>
+    </div>
+    <button class="meter-btn" onclick="runMeter()">💙 Ukur Cinta</button>
+    <div class="meter-message" id="meterMsg"></div>
+  </div>
+
+  <div class="wish-section">
+    <div class="section-label">✦ Harapan untuk Kita ✦</div>
+    <div class="wish-scroll">
+      <div class="wish-card" onclick="selectWish(this)">
+        <span class="wish-emoji">🌟</span>
+        <div class="wish-title">Bahagia Selalu</div>
+        <div class="wish-text">Semoga kebahagiaan selalu menyertai setiap langkah kita</div>
+      </div>
+      <div class="wish-card" onclick="selectWish(this)">
+        <span class="wish-emoji">🏠</span>
+        <div class="wish-title">Rumah Kita</div>
+        <div class="wish-text">Membangun rumah penuh cinta dan kehangatan bersama</div>
+      </div>
+      <div class="wish-card" onclick="selectWish(this)">
+        <span class="wish-emoji">✈️</span>
+        <div class="wish-title">Petualangan</div>
+        <div class="wish-text">Menjelajahi dunia bersama, menciptakan memori baru</div>
+      </div>
+      <div class="wish-card" onclick="selectWish(this)">
+        <span class="wish-emoji">💍</span>
+        <div class="wish-title">Selamanya</div>
+        <div class="wish-text">Bersama hingga ujung waktu, selamanya dan selamanya</div>
+      </div>
+      <div class="wish-card" onclick="selectWish(this)">
+        <span class="wish-emoji">🌈</span>
+        <div class="wish-title">Masa Depan</div>
+        <div class="wish-text">Masa depan cerah penuh warna menanti kita berdua</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="share-section">
+    <button class="btn-share" onclick="share()">💙 Bagikan Momen Ini</button>
+    <div class="share-note">Ceritakan cinta kita pada dunia</div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function() {
+  var cont = document.getElementById('starsContainer');
+  for (var i = 0; i < 120; i++) {
+    var s = document.createElement('div');
+    s.className = 'star';
+    var sz = Math.random() * 2.5 + 0.5;
+    s.style.cssText = 'width:'+sz+'px;height:'+sz+'px;top:'+Math.random()*100+'%;left:'+Math.random()*100+'%;--d:'+(Math.random()*4+2)+'s;animation-delay:'+(Math.random()*5)+'s;';
+    cont.appendChild(s);
+  }
+})();
+
+(function() {
+  var cont = document.getElementById('particlesContainer');
+  var colors = ['#5db8f7','#b8deff','#7ec8f5','#1a6cbf','#ffffff'];
+  for (var i = 0; i < 25; i++) {
+    var p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = 'left:'+Math.random()*100+'%;background:'+colors[Math.floor(Math.random()*colors.length)]+';--dur:'+(Math.random()*10+6)+'s;animation-delay:'+(Math.random()*10)+'s;';
+    cont.appendChild(p);
+  }
+})();
+
+var months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+var days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+
+function formatDate(d) {
+  return days[d.getDay()]+', '+d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear();
+}
+
+document.getElementById('heroDate').textContent = formatDate(new Date());
+
+function updateCountdown() {
+  var now = new Date();
+  var sd = document.getElementById('startDate').value;
+  var target;
+  if (sd) {
+    var parts = sd.split('-');
+    target = new Date(now.getFullYear(), parseInt(parts[1])-1, parseInt(parts[2]));
+    if (target < now) target.setFullYear(target.getFullYear() + 1);
+  } else {
+    target = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 30);
+  }
+  var diff = target - now;
+  if (diff < 0) diff = 0;
+  var d = Math.floor(diff / 86400000);
+  var h = Math.floor((diff % 86400000) / 3600000);
+  var m = Math.floor((diff % 3600000) / 60000);
+  var s = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cd-days').textContent = String(d).padStart(3,'0');
+  document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+  document.getElementById('cd-mins').textContent = String(m).padStart(2,'0');
+  document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+function updateStats() {
+  var sd = document.getElementById('startDate').value;
+  var st = document.getElementById('startTime').value || '00:00';
+  if (!sd) { ['statDays','statHours','statMins'].forEach(function(id){ document.getElementById(id).textContent = '—'; }); return; }
+  var start = new Date(sd + 'T' + st);
+  var now = new Date();
+  var diff = now - start;
+  if (diff < 0) diff = 0;
+  document.getElementById('statDays').textContent = Math.floor(diff / 86400000).toLocaleString('id-ID');
+  document.getElementById('statHours').textContent = Math.floor(diff / 3600000).toLocaleString('id-ID');
+  document.getElementById('statMins').textContent = Math.floor(diff / 60000).toLocaleString('id-ID');
+}
+document.getElementById('startDate').addEventListener('change', function(){ updateStats(); updateCountdown(); });
+document.getElementById('startTime').addEventListener('change', updateStats);
+
+var defDate = new Date();
+defDate.setFullYear(defDate.getFullYear() - 3);
+document.getElementById('startDate').value = defDate.toISOString().split('T')[0];
+updateStats();
+
+document.getElementById('name1Input').addEventListener('input', function(){
+  document.getElementById('name1Display').textContent = this.value || 'Namamu';
+});
+document.getElementById('name2Input').addEventListener('input', function(){
+  document.getElementById('name2Display').textContent = this.value || 'Namanya';
+});
+
+document.getElementById('letterInput').addEventListener('input', function(){
+  document.getElementById('letterDisplay').textContent = this.value;
+});
+
+function addMemory() {
+  var inp = document.getElementById('memoryInput');
+  var val = inp.value.trim();
+  if (!val) return;
+  var tl = document.getElementById('timeline');
+  var now = new Date();
+  var item = document.createElement('div');
+  item.className = 'timeline-item';
+  item.innerHTML = '<div class="timeline-dot"></div><div class="timeline-year">'+months[now.getMonth()]+' '+now.getFullYear()+'</div><div class="timeline-text">'+val+'</div>';
+  tl.appendChild(item);
+  inp.value = '';
+  showToast('Kenangan berhasil ditambahkan 💙');
+  spawnHearts(window.innerWidth/2, window.innerHeight/2);
+}
+
+var moodData = {
+  romantic: { icon: '🌹', text: 'Lagu untukmu: "A Thousand Years" by Christina Perri. Biarkan melodi ini membawamu ke saat pertama kita bersama...' },
+  happy:    { icon: '✨', text: 'Lagu untukmu: "Happy" by Pharrell Williams. Karena bersamamu, setiap hari adalah perayaan!' },
+  nostalgic:{ icon: '🌙', text: 'Lagu untukmu: "Never Not" by Lauv. Ingat semua momen indah yang kita ciptakan bersama...' },
+  grateful: { icon: '💙', text: 'Lagu untukmu: "You Are The Reason" by Calum Scott. Bersyukur kamu ada di hidupku.' },
+  dreamy:   { icon: '🌌', text: 'Lagu untukmu: "Stargazing" by Kygo. Menatap bintang bersamamu adalah mimpi nyata.' },
+  cozy:     { icon: '☕', text: 'Lagu untukmu: "The Night We Met" by Lord Huron. Malam yang hangat bersama orang tercinta.' }
+};
+
+function setMood(btn, mood) {
+  document.querySelectorAll('.mood-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  var d = moodData[mood];
+  var el = document.getElementById('moodResult');
+  el.innerHTML = d.icon + ' ' + d.text;
+  el.classList.add('show');
+}
+
+var meterMessages = [
+  '"Cintaku untukmu tak terbatas seperti langit malam yang penuh bintang"',
+  '"Setiap detik bersamamu adalah hadiah terindah dalam hidupku"',
+  '"Kamu adalah rumah yang selalu aku cari, dan akhirnya aku menemukanmu"',
+  '"Tiga tahun, ribuan momen, satu hati — hatimu adalah milikku"',
+  '"Bersamamu, bahkan hari biasa pun menjadi luar biasa"',
+];
+var meterRunning = false;
+
+function runMeter() {
+  if (meterRunning) return;
+  meterRunning = true;
+  var fill = document.getElementById('meterFill');
+  var pct = document.getElementById('meterPct');
+  var msg = document.getElementById('meterMsg');
+  var circum = 408;
+  var target = Math.floor(Math.random() * 10 + 91);
+  var current = 0;
+  msg.classList.remove('show');
+  fill.style.strokeDashoffset = circum;
+  pct.textContent = '0%';
+  var step = setInterval(function() {
+    current++;
+    fill.style.strokeDashoffset = circum - (circum * current / 100);
+    pct.textContent = current + '%';
+    if (current >= target) {
+      clearInterval(step);
+      meterRunning = false;
+      msg.textContent = meterMessages[Math.floor(Math.random()*meterMessages.length)];
+      msg.classList.add('show');
+      spawnHearts(window.innerWidth/2, 400);
+    }
+  }, 20);
+}
+
+function selectWish(card) {
+  document.querySelectorAll('.wish-card').forEach(function(c){ c.classList.remove('selected'); });
+  card.classList.add('selected');
+  showToast('Harapan "' + card.querySelector('.wish-title').textContent + '" dipilih 💙');
+}
+
+function share() {
+  var n1 = document.getElementById('name1Input').value || 'Aku';
+  var n2 = document.getElementById('name2Input').value || 'Kamu';
+  var text = '💙 ' + n1 + ' & ' + n2 + ' — 3 Tahun Bersama! 💙\n\n' + formatDate(new Date()) + '\n\n#Anniversary3Years #TogetherForever';
+  if (navigator.share) {
+    navigator.share({ title: '3 Tahun Bersama', text: text });
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function(){ showToast('Pesan disalin ke clipboard! 💙'); });
+  } else {
+    showToast('Bagikan momen indah ini! 💙');
+  }
+  spawnHearts(window.innerWidth/2, window.innerHeight/2);
+}
+
+function spawnHearts(x, y) {
+  var hearts = ['💙','💎','🌟','✨','⭐'];
+  for (var i = 0; i < 8; i++) {
+    (function(i) {
+      setTimeout(function() {
+        var h = document.createElement('div');
+        h.className = 'floating-heart';
+        h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+        h.style.cssText = 'left:'+(x+(Math.random()-0.5)*120)+'px;top:'+(y+(Math.random()-0.5)*60)+'px;font-size:'+(14+Math.random()*12)+'px;';
+        document.body.appendChild(h);
+        setTimeout(function(){ h.remove(); }, 2100);
+      }, i * 80);
+    })(i);
+  }
+}
+
+document.addEventListener('click', function(e) {
+  if (e.target.closest('input, textarea, button, select')) return;
+  spawnHearts(e.clientX, e.clientY);
+});
+
+var toastTimer;
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2500);
+}
+</script>
+</body>
+</html>
